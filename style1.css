@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* custom properties */
+:root {
+  --clr-primary: rgb(54, 112, 199);
+  --clr-light: #f4f4f4;
+  --clr-dark: #333;
+  --clr-warning: rgb(99, 36, 36);
+}
+
+/* css reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* core styling */
+body {
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  background: var(--clr-primary);
+  color: var(--clr-light);
+}
+form {
+  display: flex;
+}
+input {
+  background: transparent;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+}
+.new-task:disabled {
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+.new-task:disabled::placeholder {
+  color: #ccc;
+  opacity: 1 !important;
+}
+
+/* utilities */
+.wrapper {
+  width: min(900px, 95%);
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.btn {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 0.5em 1.5em;
+  outline: none;
+  border: none;
+  border-radius: 0.25em;
+  background: transparent;
+  color: var(--clr-light);
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus {
+  border: 1px dashed var(--clr-light);
+  opacity: 1;
+}
+
+/* ================main styling================ */
+
+/* header */
+.main-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.main-title h1 {
+  display: inline-block;
+  position: relative;
+}
+.main-title h1::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #ccc;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* lists */
+.all-tasks .list-title {
+  margin: 1.5rem 0;
+}
+.task-list {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  list-style: circle;
+  padding-left: 1.1em;
+}
+.list-name {
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+.list-name:hover {
+  opacity: 0.7;
+}
+.active-list {
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+}
+.new-list {
+  background: transparent;
+  outline: none;
+  border: 0;
+  color: var(--clr-light);
+  border-bottom: 1px solid;
+  font-size: 1.25rem;
+  padding: 0.25em;
+  order: 2;
+  position: relative;
+}
+.new-list::placeholder {
+  color: var(--clr-light);
+  opacity: 0.5;
+  transition: opacity 150ms ease;
+}
+.new-list:hover::placeholder,
+.new-list:focus::placeholder {
+  opacity: 0.2;
+}
+
+.create-list {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-right: 0.25em;
+  transition: opacity 150ms ease-in;
+  background: transparent;
+  color: var(--clr-light);
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.create-list:hover,
+.create-list:focus {
+  opacity: 0.8;
+  font-size: 1.75rem;
+}
+
+/* tasks */
+.todo-list {
+  --space: 2rem;
+  background: var(--clr-light);
+  color: var(--clr-dark);
+}
+.todo-list-header {
+  padding: var(--space);
+  background: #e4e4e4;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  justify-content: space-between;
+}
+.todo-list-title {
+  margin: 0;
+}
+.task-count {
+  margin: 0;
+  font-size: 1rem;
+}
+.todo-body {
+  padding: var(--space);
+  position: relative;
+}
+.task {
+  position: relative;
+}
+.task::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 1;
+}
+
+.task label {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding-bottom: 0.25em;
+  transition: opacity 150ms ease;
+  cursor: pointer;
+}
+.task label::after {
+  content: '';
+  position: absolute;
+  left: 1.5em;
+  right: 0;
+  top: calc(50% - 2px);
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 150ms ease;
+  transform-origin: left;
+}
+
+.task:not(:last-of-type) {
+  position: relative;
+  margin-bottom: 1em;
+}
+
+/* custom checkbox */
+input[type='checkbox'] {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+  transition: all 200ms ease-in-out;
+}
+.custom-checkbox {
+  --size: 0.75em;
+  display: inline-block;
+  width: var(--size);
+  aspect-ratio: 1/1;
+  margin-right: var(--size);
+  cursor: pointer;
+  border: 2px solid var(--clr-dark);
+  border-radius: 50%;
+  transform: scale(1);
+  transition: all 150ms ease-in-out;
+}
+.task:hover .custom-checkbox,
+input[type='checkbox']:focus-visible + label .custom-checkbox {
+  transform: scale(1.2);
+  color: var(--clr-primary);
+}
+
+input[type='checkbox']:checked + label .custom-checkbox {
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  box-shadow: inset 0 0 0 3px white;
+}
+input[type='checkbox']:checked + label {
+  opacity: 0.5;
+  user-select: none;
+}
+input[type='checkbox']:checked + label::after {
+  transform: scaleX(1);
+}
+/* custom checkbox ends */
+
+.new-task {
+  background: transparent;
+  outline: none;
+  border: 0;
+  color: var(--clr-dark);
+  border-bottom: 1px solid;
+  font-size: 1.25rem;
+  padding: 0.25em;
+  order: 2;
+  position: relative;
+}
+.new-task::placeholder {
+  color: var(--clr-dark);
+  opacity: 0.5;
+  transition: opacity 150ms ease;
+}
+.new-task:hover::placeholder,
+.new-task:focus::placeholder {
+  opacity: 0.2;
+}
+.new-task-creator form {
+  margin: 1rem 0 0 0;
+}
+.create-task {
+  color: var(--clr-primary);
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-right: 0.25em;
+  transition: opacity 150ms ease-in;
+  background: transparent;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.create-task:hover,
+.create-task:focus {
+  opacity: 0.8;
+  font-size: 1.75rem;
+}
+
+.delete-stuff {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  color: var(--clr-dark);
+  margin-bottom: 1rem;
+}
+.delete-stuff button {
+  color: var(--clr-dark);
+}
+.delete-stuff button:hover,
+.delete-stuff button:focus {
+  border-color: var(--clr-dark);
+  color: var(--clr-warning);
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
